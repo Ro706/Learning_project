@@ -1,17 +1,43 @@
-import {connect} from "@/lib/dbConnect";
-import { NextRequest,NextResponse } from "next/server";
-import  User from "@/models/userModel";
+import { connect } from "@/lib/dbConnect";
+import { NextRequest, NextResponse } from "next/server";
+import UserModel from "@/models/userModel";
 
-connect()
+connect();
 
-export async function POST(request: NextRequest){
-    try{
-        
-    }catch(error: any){
+export async function POST(request: NextRequest) {
+    try {
+        const reqBody = await request.json();
+        const { token } = reqBody;
+
+        console.log(token);
+
+        const user = await UserModel.findOne({
+            verifyToken: token,
+            verifyTokenExpiry: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            return NextResponse.json(
+                { error: "Invalid Token" },
+                { status: 400 }
+            );
+        }
+
+        user.isVerified = true;
+        user.verifyToken = undefined;
+        user.verifyTokenExpiry = undefined;
+
+        await user.save();
+
         return NextResponse.json({
-            error:  error.message
-        },{
-            status: 500
-        })
+            message: "Email verified successfully",
+            success: true,
+        });
+
+    } catch (error: any) {
+        return NextResponse.json(
+            { error: error.message },
+            { status: 500 }
+        );
     }
 }
