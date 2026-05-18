@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Learning Next.js: Full-Stack Authentication Project
 
-## Getting Started
+Welcome to the **Learning** project! This repository is a dedicated workspace for mastering **Next.js** by building a robust, full-stack application from scratch. The primary focus of this project is implementing a complete authentication system with modern web development practices.
 
-First, run the development server:
+## 🚀 About Next.js
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Next.js is a powerful React framework that enables you to build high-performance web applications with ease. It provides a developer-friendly experience with features like:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **App Router:** A file-system based router built on top of React Server Components.
+- **Server Components:** Render components on the server by default for better performance and SEO.
+- **Client Components:** Use the full power of React hooks and browser APIs where needed.
+- **API Routes:** Build robust backend APIs within the same project using Route Handlers.
+- **Data Fetching:** Simplified data fetching with `fetch` and server-side rendering.
+- **Middleware:** Run code before a request is completed for authentication and redirects.
+- **Built-in SEO:** Easy management of metadata for search engine optimization.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Project Implementation
 
-## Learn More
+In this project, I am implementing a comprehensive authentication flow to understand how Next.js handles complex state, security, and backend integrations.
 
-To learn more about Next.js, take a look at the following resources:
+### Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **User Authentication:**
+    - **Signup:** Secure registration with password hashing using `bcryptjs`.
+    - **Login:** Session-based authentication using **JSON Web Tokens (JWT)**.
+    - **Logout:** Securely clearing session cookies.
+2.  **Email Verification:**
+    - Integration with **Nodemailer** to send verification emails.
+    - Token-based verification system to ensure valid user emails.
+3.  **Database Integration:**
+    - Using **MongoDB** with **Mongoose** for data persistence.
+    - Singleton connection pattern to optimize serverless execution.
+4.  **Secure Routing:**
+    - Protected routes using JWT stored in **HTTP-only cookies**.
+    - Dynamic routing for user profiles (`/profile/[id]`).
+5.  **Modern UI:**
+    - Styled with **Tailwind CSS 4** for a sleek, responsive design.
+    - Interactive feedback using `react-hot-toast`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 💻 Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework:** Next.js 15+ (App Router)
+- **Language:** TypeScript
+- **Database:** MongoDB
+- **ORM:** Mongoose
+- **Auth:** JWT (JsonWebToken) & Bcryptjs
+- **Mailing:** Nodemailer
+- **Styling:** Tailwind CSS 4
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📂 Project Structure
+
+- `app/api/`: Backend API routes for authentication and user data.
+- `app/about/`: Detailed technical documentation of the codebase.
+- `app/profile/`: User dashboard and dynamic profile pages.
+- `assists/`: Helper functions for JWT extraction and email handling.
+- `lib/`: Database connection configuration.
+- `models/`: Mongoose schemas and models.
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- Node.js installed
+- MongoDB URI (Local or Atlas)
+- SMTP credentials for email (e.g., Gmail App Password)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd learning
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root directory and add:
+    ```env
+    MONGODB_URI=your_mongodb_uri
+    TOKEN_SECRET=your_jwt_secret
+    DOMAIN=http://localhost:3000
+    SMTP_USER=your_email
+    SMTP_PASS=your_email_password
+    ```
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+Open [http://localhost:3000](http://localhost:3000) to see the application in action.
+
+---
+
+## 📖 Learning Objectives
+
+- [x] Understand Next.js App Router and File-based Routing.
+- [x] Implement Full-Stack Authentication with JWT.
+- [x] Integrate MongoDB and Mongoose with Next.js.
+- [x] Handle Emails in a Serverless Environment.
+- [x] Manage Protected Routes and Middleware.
+- [ ] Implement Password Reset Functionality.
+- [ ] Add Form Validation with Zod.
+
+---
+
+Built with ❤️ by a Next.js Learner.

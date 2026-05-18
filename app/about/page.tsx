@@ -1,5 +1,4 @@
 export default function About() {
-
   const db_connection = `
 import mongoose from 'mongoose';
 
@@ -79,116 +78,95 @@ export async function POST(request: NextRequest){
 }
 `;
 
-  const signup_route = `
-export async function POST(request: NextRequest){
-    try{
-        const reqBody = await request.json()
-        const {username,email,password} = reqBody
-
-        const user = await UserModel.findOne({email})
-        if(user) return NextResponse.json({error: "User exists"}, {status: 400})
-
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password,salt)
-
-        const newUser = new UserModel({ username, email, password: hashedPassword })
-        const savedUser = await newUser.save() 
-        
-        return NextResponse.json({ message: "User created", success: true, savedUser })   
-    } catch(error: any) {
-        return NextResponse.json({error: error.message}, {status: 500})
-    }
-}
-`;
-
-  const logout_route = `
-export async function GET() {
-    try {
-        const response = NextResponse.json({
-            message: "Logout successful",
-            success: true,
-        });
-        response.cookies.set("token", "", { 
-            httpOnly: true, 
-            expires: new Date(0) 
-        });
-        return response;
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}
-`;
-
   return (
     <div className="min-h-screen bg-black text-white p-8 font-sans">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-5xl font-extrabold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-          Codebase Technical Documentation
-        </h1>
-        <p className="text-center text-gray-400 mb-12">Detailed analysis and implementation of the authentication system.</p>
+      <div className="max-w-6xl mx-auto">
+        {/* Header Section */}
+        <header className="text-center mb-16">
+          <h1 className="text-6xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
+            Next.js Learning Journey
+          </h1>
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            This project is a deep dive into the world of Next.js, exploring the intersection of modern frontend architecture and robust backend logic.
+          </p>
+        </header>
 
-        <div className="space-y-16">
-          {/* Section 1: DB */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-10 w-1 bg-blue-500 rounded-full"></div>
-              <h2 className="text-3xl font-bold">Database Architecture</h2>
+        {/* Learning Objectives Grid */}
+        <section className="mb-20">
+          <h2 className="text-3xl font-bold mb-10 border-b border-gray-800 pb-4 flex items-center gap-3">
+            <span className="text-blue-500">01.</span> Core Concepts Explored
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-blue-500/50 transition-all group">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors">App Router</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Mastering file-based routing with layouts, nested routes, and specialized files like `error.tsx` and `loading.tsx`.</p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-blue-400">Connection Logic</h3>
-                <p className="text-gray-400 mb-4 text-sm">Uses a singleton pattern to maintain a single MongoDB connection across serverless invocations.</p>
-                <pre className="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-blue-300 overflow-x-auto">
-                  <code>{db_connection}</code>
-                </pre>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-purple-400">User Schema</h3>
-                <p className="text-gray-400 mb-4 text-sm">Defines properties for authentication, verification tokens, and administrative roles.</p>
-                <pre className="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs text-purple-300 overflow-x-auto">
-                  <code>{model_code}</code>
-                </pre>
-              </div>
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-purple-500/50 transition-all group">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-purple-400 transition-colors">Server Components</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Leveraging React Server Components (RSC) to reduce client-side bundle size and improve initial load performance.</p>
             </div>
-          </section>
-
-          {/* Section 2: API Routes */}
-          <section>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="h-10 w-1 bg-green-500 rounded-full"></div>
-              <h2 className="text-3xl font-bold">API Route Implementation</h2>
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-green-500/50 transition-all group">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-green-400 transition-colors">Route Handlers</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Building secure API endpoints directly within the Next.js app to handle authentication and database operations.</p>
             </div>
-            
-            <div className="space-y-10">
-              <div className="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                <h3 className="text-2xl font-bold mb-4 text-green-400">1. Registration (Signup)</h3>
-                <p className="text-gray-400 mb-6 italic">Validates user existence, salts and hashes the password, and persists the new user document.</p>
-                <pre className="bg-black p-5 rounded-xl border border-gray-700 text-sm text-green-300 overflow-x-auto">
-                  <code>{signup_route}</code>
-                </pre>
-              </div>
-
-              <div className="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                <h3 className="text-2xl font-bold mb-4 text-yellow-400">2. Authentication (Login)</h3>
-                <p className="text-gray-400 mb-6 italic">Verifies credentials, generates a JWT, and sets it as an HTTP-only cookie for secure session tracking.</p>
-                <pre className="bg-black p-5 rounded-xl border border-gray-700 text-sm text-yellow-200 overflow-x-auto">
-                  <code>{login_route}</code>
-                </pre>
-              </div>
-
-              <div className="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-                <h3 className="text-2xl font-bold mb-4 text-red-400">3. Termination (Logout)</h3>
-                <p className="text-gray-400 mb-6 italic">Clears the authentication token by expiring the cookie immediately.</p>
-                <pre className="bg-black p-5 rounded-xl border border-gray-700 text-sm text-red-300 overflow-x-auto">
-                  <code>{logout_route}</code>
-                </pre>
-              </div>
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-yellow-500/50 transition-all group">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-yellow-400 transition-colors">JWT Auth</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Implementing stateless authentication with JSON Web Tokens stored in secure, HTTP-only cookies.</p>
             </div>
-          </section>
-        </div>
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-pink-500/50 transition-all group">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-pink-400 transition-colors">DB Integration</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Connecting Next.js with MongoDB using Mongoose, ensuring efficient connection pooling in serverless environments.</p>
+            </div>
+            <div className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-cyan-500/50 transition-all group">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">Edge Middleware</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Using middleware to protect routes and handle redirects before the application renders on the client.</p>
+            </div>
+          </div>
+        </section>
 
-        <footer className="mt-20 py-10 border-t border-gray-800 text-center">
-          <p className="text-gray-600">This documentation is dynamically generated from the project's core files.</p>
+        {/* Technical Documentation Section */}
+        <section className="mb-20">
+          <h2 className="text-3xl font-bold mb-10 border-b border-gray-800 pb-4 flex items-center gap-3">
+            <span className="text-purple-500">02.</span> Implementation Deep Dive
+          </h2>
+          
+          <div className="space-y-12">
+            {/* DB Architecture */}
+            <div className="bg-zinc-900/50 rounded-3xl p-8 border border-zinc-800">
+              <h3 className="text-2xl font-bold mb-4 text-blue-400">Database Singleton Pattern</h3>
+              <p className="text-gray-400 mb-6 max-w-2xl">
+                To prevent multiple connections during hot-reloads and serverless invocations, a singleton pattern is used to check for an existing connection state before establishing a new one.
+              </p>
+              <pre className="bg-black/80 p-6 rounded-xl border border-zinc-700 text-sm text-blue-200 overflow-x-auto">
+                <code>{db_connection}</code>
+              </pre>
+            </div>
+
+            {/* Auth Logic */}
+            <div className="bg-zinc-900/50 rounded-3xl p-8 border border-zinc-800">
+              <h3 className="text-2xl font-bold mb-4 text-purple-400">Authentication Flow (Login)</h3>
+              <p className="text-gray-400 mb-6 max-w-2xl">
+                The login process involves credential verification against hashed passwords, followed by the generation of a signed JWT token that is delivered via a secure cookie.
+              </p>
+              <pre className="bg-black/80 p-6 rounded-xl border border-zinc-700 text-sm text-purple-200 overflow-x-auto">
+                <code>{login_route}</code>
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="text-center py-20 border-t border-zinc-900">
+          <p className="text-zinc-500 mb-2">Designed for the pursuit of Next.js mastery.</p>
+          <div className="flex justify-center gap-6 text-zinc-400 text-sm">
+            <span>Next.js 15+</span>
+            <span>•</span>
+            <span>TypeScript</span>
+            <span>•</span>
+            <span>Tailwind CSS</span>
+            <span>•</span>
+            <span>MongoDB</span>
+          </div>
         </footer>
       </div>
     </div>
