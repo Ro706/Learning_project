@@ -116,4 +116,4 @@ Open [http://localhost:3000](http://localhost:3000) to see the application in ac
 
 ---
 
-Built with ❤️ by a Next.js Learner.
+Built with ❤️ by a Ro706.
