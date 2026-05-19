@@ -18,20 +18,16 @@ export default function Navbar() {
 
       const res = await axios.get("/api/users/userdata");
 
-      console.log(res.data);
-
-      setUser(res.data.data._id);
-
-      console.log("User data set successfully");
+      if (res.data.data) {
+        setUser(res.data.data._id);
+        console.log("User data set successfully");
+      } else {
+        setUser("");
+      }
 
     } catch (error: any) {
-
-      console.log(error.message);
-
+      console.log("User not logged in or session expired");
       setUser("");
-
-      // Optional
-      // toast.error(error.response?.data?.error || "Something went wrong");
     }
   };
 

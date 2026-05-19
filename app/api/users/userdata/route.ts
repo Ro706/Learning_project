@@ -7,16 +7,27 @@ connect();
 
 export async function GET(request: NextRequest) {
     try {
+        const token = request.cookies.get("token")?.value;
+        
+        if (!token) {
+            return NextResponse.json({
+                message: "Not authenticated",
+                data: null
+            });
+        }
+
         const user_ID = getDataFromToken(request);
         const user = await UserModel.findOne({
             _id: user_ID,
         }).select("-password");
+
         if (!user) {
-            return NextResponse.json(
-                { error: "User not found" },
-                { status: 404 }
-            );
+            return NextResponse.json({
+                message: "User not found",
+                data: null
+            });
         }
+
         return NextResponse.json({
             message: "User found",
             data: user,
@@ -24,7 +35,7 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
         return NextResponse.json(
             { error: error.message },
-            { status: 400 }
+            { status: 500 }
         );
     }
 }

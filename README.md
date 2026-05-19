@@ -111,8 +111,8 @@ Open [http://localhost:3000](http://localhost:3000) to see the application in ac
 - [x] Integrate MongoDB and Mongoose with Next.js.
 - [x] Handle Emails in a Serverless Environment.
 - [x] Manage Protected Routes and Middleware.
-- [ ] Implement Password Reset Functionality.
-- [ ] Add Form Validation with Zod.
+- [x] Implement Password Reset Functionality.
+
 
 ---
 

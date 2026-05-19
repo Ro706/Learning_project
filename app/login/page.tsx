@@ -75,7 +75,10 @@ export default function Login() {
                 >
                     {buttonDisabled ? "No Login" : "Login"}
                 </button> <br/>
-                <div className="mt-4 text-sm">If you don't have account <Link href="/signup" className="text-black underline bold">click here</Link></div>
+                <div className="mt-4 text-sm flex flex-col gap-2">
+                    <div>If you don't have account <Link href="/signup" className="text-black underline bold">click here</Link></div>
+                    <div><Link href="/forgotpassword" className="text-black underline bold">Forgot Password?</Link></div>
+                </div>
             </div>)}
         </div>
     );
