@@ -42,7 +42,7 @@ export const sendEmail = async ({
 
             html: `<p>
                 Click 
-                <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">
+                <a href="${process.env.DOMAIN}/${emailType === "VERIFY" ? 'verifyemail' : 'forgotpassword'}?token=${hashedToken}">
                     here
                 </a> 
                 to ${
